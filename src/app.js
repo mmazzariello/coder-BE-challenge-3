@@ -9,10 +9,6 @@ app.use(express.urlencoded({ extended: true }));
 
 const productManager = new ProductManager("./info.txt");
 
-// app.get("/", (req, res) => {
-//   res.send("My first server with Express");
-// });
-
 app.listen(PORT, () => {
   console.log(` Server on port ${PORT}`);
 });

@@ -55,6 +55,7 @@ export class ProductManager {
       return productToFind.find((prod) => prod.id === parseInt(id));
     } else {
       console.error("Product not found");
+      return { error: `Product with id ${id} not found` };
     }
   }
 

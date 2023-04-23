@@ -32,5 +32,11 @@ app.get("/product", async (req, res) => {
 
 app.get("/product/:id", async (req, res) => {
   const product = await productManager.getProductById(req.params.id);
+
+  if (!product) {
+    res.status(404).send("Product not found");
+    return;
+  }
+
   res.send(product);
 });

@@ -15,15 +15,16 @@ export class ProductManager {
       !product.code ||
       !product.stock
     ) {
-      console.error("All fields are mandatory");
-      return;
+      throw new Error("All fields are mandatory");
     }
 
-    const duplicateCode = this.products.some((p) => p.code === product.code);
+    const productsArr = await fs.readFile(this.path, "utf-8");
+    const parsedProducts = JSON.parse(productsArr);
+    const duplicateCode = parsedProducts.some((p) => p.code === product.code);
+
     try {
       if (duplicateCode) {
-        console.error("Product code is already in use");
-        return;
+        throw new Error("Product code is already in use");
       } else {
         const content = await fs.readFile(this.path, "utf-8");
 
@@ -178,8 +179,9 @@ const product6 = new Product(
 //ADD PRODUCTS
 const productManager = new ProductManager("./info.txt");
 await productManager.addProduct(product1);
-await productManager.addProduct(product2);
-await productManager.addProduct(product3);
-await productManager.addProduct(product4); //Se generará error por tener un campo vacío
-await productManager.addProduct(product5);
-await productManager.addProduct(product6); // Se generará error por tener el campo code duplicado
+// await productManager.addProduct(product1); // Se generará error porque ya existe en el txt
+// await productManager.addProduct(product2);
+// await productManager.addProduct(product3);
+// await productManager.addProduct(product4); //Se generará error por tener un campo vacío
+// await productManager.addProduct(product5);
+// await productManager.addProduct(product6); // Se generará error por tener el campo code duplicado
